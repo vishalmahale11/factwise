@@ -1,42 +1,87 @@
 import { AgGridReact } from "ag-grid-react";
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import type { ColDef } from "ag-grid-community";
 import { AllCommunityModule, ModuleRegistry } from "ag-grid-community";
+import AppTablePagination from "./pagination";
 
 ModuleRegistry.registerModules([AllCommunityModule]);
 
-interface Car {
-  make: string;
-  model: string;
-  price: number;
-  electric: boolean;
+interface AgGridTableProps {
+  rowData: any[];
+  columnDefs: ColDef[];
+  defaultPageSize?: number;
 }
 
-const AGGrid = () => {
-  const [rowData, setRowData] = useState<Car[]>([
-    { make: "Tesla", model: "Model Y", price: 64950, electric: true },
-    { make: "Ford", model: "F-Series", price: 33850, electric: false },
-    { make: "Toyota", model: "Corolla", price: 29600, electric: false },
-  ]);
+const AGGridTable = ({
+  rowData,
+  columnDefs,
+  defaultPageSize = 5,
+}: AgGridTableProps) => {
+  const [pageSize, setPageSize] = useState<number>(defaultPageSize);
+  const [currentPage, setCurrentPage] = useState<number>(1);
 
-  const [colDefs, setColDefs] = useState<ColDef<Car>[]>([
-    { field: "make" },
-    { field: "model" },
-    { field: "price" },
-    { field: "electric" },
-  ]);
+  const paginatedData = useMemo(() => {
+    const start = (currentPage - 1) * pageSize;
+    return rowData.slice(start, start + pageSize);
+  }, [rowData, pageSize, currentPage]);
 
-  const domLayout = "autoHeight";
+  const handlePageChange = (page: number) => setCurrentPage(page);
+  const handlePageSizeChange = (size: number) => {
+    setPageSize(size);
+    setCurrentPage(1);
+  };
 
   return (
-    <div className="text-black">
-      <AgGridReact
-        rowData={rowData}
-        columnDefs={colDefs}
-        domLayout={domLayout}
-      />
+    <div className="w-full flex flex-col">
+      <div className="ag-theme-alpine w-full p-0">
+        <div className="flex justify-end mb-4">
+          <label className="text-sm font-medium mr-2">Page Size:</label>
+          <select
+            value={pageSize}
+            onChange={(e) => handlePageSizeChange(Number(e.target.value))}
+            className="border border-gray-300 rounded p-1 text-sm"
+          >
+            {[5, 10, 20].map((size) => (
+              <option key={size} value={size}>
+                {size}
+              </option>
+            ))}
+          </select>
+        </div>
+
+        <AgGridReact
+          rowData={paginatedData}
+          columnDefs={columnDefs}
+          pagination={false}
+          domLayout="autoHeight"
+          defaultColDef={{
+            flex: 1,
+            minWidth: 120,
+            sortable: true,
+            filter: true,
+            resizable: true,
+            cellStyle: { textAlign: "left" },
+            headerClass: "ag-left-aligned-header",
+          }}
+        />
+
+        <div className="flex items-center justify-between text-sm text-gray-600 mt-4">
+          <div>
+            Showing {(currentPage - 1) * pageSize + 1}–
+            {Math.min(currentPage * pageSize, rowData.length)} of{" "}
+            {rowData.length}
+          </div>
+          <AppTablePagination
+            page={currentPage}
+            pageSize={pageSize}
+            totalCount={rowData.length}
+            onPageChange={handlePageChange}
+            showQuickJumper
+          />
+        </div>
+      </div>
     </div>
   );
 };
 
-export default AGGrid;
+export default AGGridTable;

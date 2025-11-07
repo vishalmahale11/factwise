@@ -1,38 +1,9 @@
 @import "tailwindcss";
 
 #root {
-  max-width: 1280px;
+  /* max-width: 1300px; */
   margin: 0 auto;
-  padding: 2rem;
   text-align: center;
-}
-
-.logo {
-  height: 6em;
-  padding: 1.5em;
-  will-change: filter;
-  transition: filter 300ms;
-}
-.logo:hover {
-  filter: drop-shadow(0 0 2em #646cffaa);
-}
-.logo.react:hover {
-  filter: drop-shadow(0 0 2em #61dafbaa);
-}
-
-@keyframes logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
-}
-
-@media (prefers-reduced-motion: no-preference) {
-  a:nth-of-type(2) .logo {
-    animation: logo-spin infinite 20s linear;
-  }
 }
 
 .card {
@@ -41,4 +12,74 @@
 
 .read-the-docs {
   color: #888;
+}
+
+.dark .rc-pagination-options-quick-jumper input {
+  background-color: #243142;
+  border-color: #243142;
+}
+
+.dark .rc-pagination-item-active a {
+  color: black !important;
+}
+.dark .rc-pagination-item-active {
+  background-color: #c3d1e5 !important;
+  border-color: #c3d1e5 !important;
+}
+
+.dark .rc-pagination-item-active:focus .rc-pagination-item-active:hover {
+  background-color: #243142;
+  color: #000;
+  border-color: #243142;
+}
+.dark .rc-pagination-item {
+  background-color: #243142;
+  color: #ffff;
+  border: none;
+}
+.dark .rc-pagination-item-active:focus a,
+.rc-pagination-item-active:hover a {
+  color: black;
+}
+.dark .rc-pagination-item a {
+  color: #ffff;
+}
+.dark .rc-pagination-item:focus {
+  background-color: #243142;
+  color: #ffff;
+  border-color: #243142;
+}
+.dark .rc-pagination-disabled {
+  background-color: #243142;
+  color: #ffff;
+  border-color: #243142;
+}
+.dark .rc-pagination-prev .rc-pagination-item-link {
+  background-color: #243142;
+  color: #ffff;
+  border-color: #243142;
+}
+.dark .rc-pagination-prev:hover .rc-pagination-item-link {
+  background-color: #243142;
+  color: #ffff;
+  border-color: #243142;
+}
+
+.dark .rc-pagination-next .rc-pagination-item-link {
+  background-color: #243142;
+  color: #ffff;
+  border-color: #243142;
+}
+.dark .rc-pagination-next:hover .rc-pagination-item-link {
+  background-color: #243142;
+  color: #ffff;
+  border-color: #243142;
+}
+
+.rc-pagination-options-quick-jumper input {
+  width: 50px;
+  margin: 0 8px;
+  border: 1px solid #e2e8f0;
+  text-align: center;
+  border-radius: 3px;
 }

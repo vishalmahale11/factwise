@@ -1,10 +1,10 @@
 import "./App.css";
-import AGGrid from "./components/ag-grid-table";
+import Dashboard from "./dashboard";
 
 function App() {
   return (
-    <div className="border">
-      <AGGrid />
+    <div>
+      <Dashboard />
     </div>
   );
 }
