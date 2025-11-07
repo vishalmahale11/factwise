@@ -33,29 +33,28 @@ const AGGridTable = ({
 
   return (
     <div className="w-full flex flex-col">
-      <div className="ag-theme-alpine w-full p-0">
-        <div className="flex justify-end mb-4">
-          <label className="text-sm font-medium mr-2">Page Size:</label>
-          <select
-            value={pageSize}
-            onChange={(e) => handlePageSizeChange(Number(e.target.value))}
-            className="border border-gray-300 rounded p-1 text-sm"
-          >
-            {[5, 10, 20].map((size) => (
-              <option key={size} value={size}>
-                {size}
-              </option>
-            ))}
-          </select>
-        </div>
+      <div className="flex justify-end items-center mb-4">
+        <label className="text-sm font-medium mr-2">Page Size:</label>
+        <select
+          value={pageSize}
+          onChange={(e) => handlePageSizeChange(Number(e.target.value))}
+          className="border border-gray-300 rounded p-1 text-sm"
+        >
+          {[5, 10, 20].map((size) => (
+            <option key={size} value={size}>
+              {size}
+            </option>
+          ))}
+        </select>
+      </div>
 
+      <div className="ag-theme-alpine w-full">
         <AgGridReact
           rowData={paginatedData}
           columnDefs={columnDefs}
           pagination={false}
           domLayout="autoHeight"
           defaultColDef={{
-            flex: 1,
             minWidth: 120,
             sortable: true,
             filter: true,
@@ -64,21 +63,20 @@ const AGGridTable = ({
             headerClass: "ag-left-aligned-header",
           }}
         />
+      </div>
 
-        <div className="flex items-center justify-between text-sm text-gray-600 mt-4">
-          <div>
-            Showing {(currentPage - 1) * pageSize + 1}–
-            {Math.min(currentPage * pageSize, rowData.length)} of{" "}
-            {rowData.length}
-          </div>
-          <AppTablePagination
-            page={currentPage}
-            pageSize={pageSize}
-            totalCount={rowData.length}
-            onPageChange={handlePageChange}
-            showQuickJumper
-          />
+      <div className="flex items-center justify-between text-sm text-gray-600 mt-4">
+        <div>
+          Showing {(currentPage - 1) * pageSize + 1}–
+          {Math.min(currentPage * pageSize, rowData.length)} of {rowData.length}
         </div>
+        <AppTablePagination
+          page={currentPage}
+          pageSize={pageSize}
+          totalCount={rowData.length}
+          onPageChange={handlePageChange}
+          showQuickJumper
+        />
       </div>
     </div>
   );

@@ -8,7 +8,7 @@ const Dashboard = () => {
   const employees = data?.employees || [];
 
   const colDefs: ColDef[] = [
-    { headerName: "ID", field: "id", width: 80 },
+    { headerName: "ID", field: "id", width: 30 },
     {
       headerName: "Status",
       field: "isActive",
@@ -19,7 +19,7 @@ const Dashboard = () => {
           textColor={params.value ? "text-green-800" : "text-red-800"}
           bg={params.value ? "bg-green-50" : "bg-red-50"}
           rightIcon={<Dot />}
-          height="h-8 px-1 my-1"
+          height="h-6 px-1 my-2"
         />
       ),
     },
@@ -30,6 +30,7 @@ const Dashboard = () => {
     { headerName: "Position", field: "position", width: 180 },
     { headerName: "Salary", field: "salary", width: 120 },
     { headerName: "Hire Date", field: "hireDate", width: 120 },
+    { headerName: "Age", field: "age", width: 120 },
     { headerName: "Location", field: "location", width: 120 },
     {
       headerName: "Performance Rating",
@@ -51,13 +52,13 @@ const Dashboard = () => {
   ];
 
   return (
-    <div className="w-screen min-h-screen bg-white overflow-x-hidden">
-      <div className="flex items-center space-x-3 mb-6 px-8">
+    <div className="w-full min-h-screen bg-white overflow-x-auto">
+      <div className="flex items-center space-x-3 mb-6 px-8 min-w-max mt-4">
         <img src="/factWise.svg" alt="FactWise Logo" className="w-16 h-16" />
-        <p className="font-bold text-2xl">Factwise Dashboard</p>
+        <p className="font-bold text-2xl">FactWise Dashboard</p>
       </div>
 
-      <div className="w-full px-4">
+      <div className="w-full px-4 overflow-x-auto h-screen">
         <AGGridTable
           rowData={employees}
           columnDefs={colDefs}
